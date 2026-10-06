@@ -36,7 +36,6 @@ public class MessageService {
             handleMessageByType(type, json);
 
         } catch (Exception e) {
-            // 忽略非JSON消息
         }
     }
 
@@ -124,7 +123,6 @@ public class MessageService {
         webSocketManager.sendMessage(response);
     }
 
-    // ✅ 这里已修复！！！
     private void sendWarpFailureResponse(String gameId, String mapName, GameSetupService.Result result, String requestId) {
         JsonObject response = new JsonObject();
 
@@ -132,7 +130,6 @@ public class MessageService {
             response.addProperty("type", "WARP_FAILED_OFFLINE_PLAYERS");
             JsonArray offline = new JsonArray();
 
-            // 修复：String 转 JsonPrimitive
             for (String player : result.getOfflinePlayers()) {
                 offline.add(new JsonPrimitive(player));
             }
